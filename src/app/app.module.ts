@@ -1,18 +1,83 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { moveItemInArray,CdkDropList,CdkDropListGroup} from '@angular/cdk/drag-drop';
+import { MatMenuModule } from '@angular/material/menu';
+
+
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TreeDetailsComponent,ChecklistDatabase  } from './tree-details/tree-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
+
+
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+import { EditNodeDialogeComponent } from './edit-node-dialoge/edit-node-dialoge.component';
+import { FormControl, FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { AddItemComponent } from './add-item/add-item.component';
+import { DeletItemComponent } from './delet-item/delet-item.component';
+import { DropdownComponent, } from './dropdown/dropdown.component';
+import { BasicTreeComponent, } from './Components/basic-tree/basic-tree.component';
+import { UpdateDialougeComponent } from './Components/update-dialouge/update-dialouge.component';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TreeDetailsComponent,
+    EditNodeDialogeComponent,
+    AddItemComponent,
+    DeletItemComponent,
+    DropdownComponent,
+    BasicTreeComponent,
+    UpdateDialougeComponent,
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatTreeModule,
+    MatDialogModule,MatFormFieldModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatInputModule,MatButtonModule,
+    MatSnackBarModule,
+   MatSnackBarModule ,
+   DragDropModule,
+   MatCheckboxModule ,
+   CdkDropList,
+   MatSelectModule,
+   MatMenuModule
+   
+
+   
+   
+
+   
+
+    
   ],
-  providers: [],
+  providers: [
+    // ChecklistDatabase
+    ChecklistDatabase
+
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

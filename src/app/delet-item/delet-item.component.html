@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Delete Item</h2>
+<div mat-dialog-content>
+  <p *ngIf="data.hasChildren">
+    This item has children. Deleting it will also delete all its children. Are you sure you want to proceed?
+  </p>
+  <p>Item Name: {{ data.itemName }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close(false)">Cancel</button>
+  <button mat-button color="warn" [mat-dialog-close]="true">Delete</button>
+</div>

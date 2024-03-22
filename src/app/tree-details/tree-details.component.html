@@ -1,0 +1,30 @@
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <div cdkDropListGroup>
+      <mat-tree-node *matTreeNodeDef="let node; let index = index" matTreeNodePadding>
+        <div cdkDrag [cdkDragData]="node" [cdkDragDisabled]="!node.item">
+            <ng-container *ngIf="hasChildren(node)">
+              <button mat-icon-button matTreeNodeToggle>
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                </mat-icon>
+              </button>
+            </ng-container>
+          <span>{{ node.item }}</span>
+          <button mat-icon-button (click)="addNewItem(node)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button (click)="openDialog(node)">
+            <mat-icon>update</mat-icon>
+          </button>
+          <button mat-icon-button (click)="editItem(node)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteItem(node)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-tree-node>
+    </div>
+  </mat-tree>
+
+

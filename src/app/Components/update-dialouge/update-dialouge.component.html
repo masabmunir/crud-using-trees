@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Update Your Node</h1>
+<mat-dialog-content class="form">
+    <mat-form-field>
+        <mat-label>Parent Node</mat-label>
+        <mat-select [(ngModel)]="selectedParentNode">
+            <mat-option *ngFor="let node of filteredParentNodes" [value]="node">
+                {{ node }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Add new name" [(ngModel)]="updatedname">
+    </mat-form-field>
+   
+    <div class="button">
+        <button mat-raised-button mat-dialog-close (click)="updateName(data)"  color="">Add</button>
+        <button mat-raised-button mat-dialog-close (click)="cancelUpdate()" color="">Cancel</button>
+    </div>
+</mat-dialog-content>
