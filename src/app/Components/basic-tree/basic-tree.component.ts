@@ -37,30 +37,11 @@ const TREE_DATA = {
     'Almond Meal flour': null,
     'Organic eggs': null,
     'Protein Powder': null,
-    Fruits: {
-      Apple: null,
-      Orange: null,
-    },
-  },
-  Reminders: ['Cook dinner', 'Read the Material Design spec', 'Upgrade Application to Angular'],
-  Vagetables: {
-    'green':['loki', 'cocumber'],
-    'red':['Carrot', 'Tomato']
-  },
-  Dishes: {
-    'Biryani':['Spicy', 'simple'],
-    'Korma':['Chicken', 'Potato']
-  },
    
-  
+  },
   
 };
 
-/**
- * Checklist database, it can build a tree structured Json object.
- * Each node in Json object represents a to-do item or a category.
- * If a node is a category, it has children items and new items can be added under the category.
- */
 @Injectable()
 export class ChecklistDatabase {
   dataChange = new BehaviorSubject<TodoItemNode[]>([]);
@@ -74,18 +55,13 @@ export class ChecklistDatabase {
   }
 
   initialize() {
-    // Build the tree nodes from Json object. The result is a list of TodoItemNode with nested
-    //     file node as children.
+    
     const data = this.buildFileTree(TREE_DATA, 0);
 
-    // Notify the change.
     this.dataChange.next(data || []);
   }
 
-  /**
-   * Build the file structure tree. The value is the Json object, or a sub-tree of a Json object.
-   * The return value is the list of TodoItemNode.
-   */
+ 
   buildFileTree(obj: {[key: string]: any}, level: number): TodoItemNode[] {
     return Object.keys(obj).reduce<TodoItemNode[]>((accumulator, key) => {
       const value = obj[key];
@@ -104,7 +80,6 @@ export class ChecklistDatabase {
     }, []);
   }
 
-  /** Add an item to to-do list */
   insertItem(parent: TodoItemNode, name: string) {
     if (parent.children) {
       parent.children.push({item: name} as TodoItemNode);
@@ -118,19 +93,7 @@ export class ChecklistDatabase {
   }
 }
 
-/**
- * @title Tree with checkboxes
- */
-// @Component({
-  
-//   selector: 'app-tree-crud',
-//   standalone: true,
-//   imports: [MaterialModule,MatCheckboxModule, UpdatedialogComponent, AddDialogComponent, CommonModule],
-//   templateUrl: 'tree-crud.component.html',
-//   styleUrls: ['tree-crud.component.css'],
-//   providers: [ChecklistDatabase, ],
-  
-// })
+
 
 @Component({
   selector: 'app-basic-tree',
@@ -138,7 +101,6 @@ export class ChecklistDatabase {
   styleUrls: ['./basic-tree.component.css']
 })
 export class BasicTreeComponent {
-  /** Map from flat node to nested node. This helps us finding the nested node to be modified */
   updatedname?: string
   parentNodes: TodoItemNode[] = [];
   childNode?: TodoItemNode[] =[]
@@ -152,13 +114,10 @@ export class BasicTreeComponent {
   @Output() update = new EventEmitter<any>()
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
-  /** Map from nested node to flattened node. This helps us to keep the same object for selection */
   nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
-  /** A selected parent node to be inserted */
   selectedParent: TodoItemFlatNode | null = null;
 
-  /** The new item's name */
   newItemName = '';
 
   treeControl: FlatTreeControl<TodoItemFlatNode>;
@@ -167,7 +126,6 @@ export class BasicTreeComponent {
 
   dataSource: MatTreeFlatDataSource<TodoItemNode, TodoItemFlatNode>;
 
-  /** The selection for checklist */
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
   constructor(private _database: ChecklistDatabase, private matDialog: MatDialog) {
@@ -187,26 +145,7 @@ export class BasicTreeComponent {
       this.parentNodes = data.filter(node =>  node.item);
     });
   }
-  // ngOnInit() {
-  //   this._database.dataChange.subscribe(data => {
-  //     this.parentNodes = this.filterNodesWithChildren(data);
-     
-  //   });
-  // }
-  // filterNodesWithChildren(nodes: TodoItemNode[]): TodoItemNode[] {
-  //   const result: TodoItemNode[] = [];
-  //   for (const node of nodes) {
-  //     if (node.children && node.children.length > 0) {
-  //       const childrenWithChildren = this.filterNodesWithChildren(node.children);
-  //       if (childrenWithChildren.length > 0) {
-  //         result.push(node);
-  //       }
-  //     }
-  //   }
-  //   console.log(result)
-  //   return result;
-  // }
-
+  
 
   getLevel = (node: TodoItemFlatNode) => node.level ?? 0;
 
@@ -416,14 +355,6 @@ export class BasicTreeComponent {
     return [node.item, ...(filteredChildrenItems || []), ...(filteredDescendants || [])];
 }).flat() as string[];
 
-    // const parentNodesItemValues = this.parentNodes.map(node => {
-    //   const childrenItems = node.children?.map(child => child.item).filter((item): item is string => !!item);
-    //   const descendants = node.children?.flatMap(child => this.getAllDescendants(child, node)).filter((item): item is string => !!item);
-    //   const childArray = node === this.newChildNode ? this.childsarray : []; // Include childsarray for the newChildNode
-     
-    //   return [node.item, ...(childrenItems || []), ...(descendants || []), ...(childArray || [])];
-    // }).flat() as string[];
-    
     
        
     
@@ -448,7 +379,6 @@ export class BasicTreeComponent {
      
      
   
-      // Ensure that both parent and child nodes are found
       if (parentNode && existingChildNode) {
         this.deleteChildNodeInTree(existingChildNode);
         // Create a new child node
@@ -506,10 +436,7 @@ export class BasicTreeComponent {
         // Notify changes in the data source
         this._database.dataChange.next([...this._database.data]);
     }
-    // else{
-    //   childNode.children = childNode.children?.filter(child=>child !== childNode)
-    //   this._database.dataChange.next([...this._database.data]);
-    // }
+   
 }
 
 findParentNodeInTree(nodes: TodoItemNode[], childNode: TodoItemNode): TodoItemNode | undefined {

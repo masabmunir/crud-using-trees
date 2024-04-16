@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { moveItemInArray,CdkDropList,CdkDropListGroup} from '@angular/cdk/drag-drop';
+import { CdkDropList} from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
-
-
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TreeDetailsComponent,ChecklistDatabase  } from './tree-details/tree-details.component';
@@ -19,13 +14,9 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-
-
-
 import {MatFormFieldModule} from '@angular/material/form-field';
-
 import { EditNodeDialogeComponent } from './edit-node-dialoge/edit-node-dialoge.component';
-import { FormControl, FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { AddItemComponent } from './add-item/add-item.component';
 import { DeletItemComponent } from './delet-item/delet-item.component';
 import { DropdownComponent, } from './dropdown/dropdown.component';
@@ -64,14 +55,7 @@ import { MatSelectModule } from '@angular/material/select';
    CdkDropList,
    MatSelectModule,
    MatMenuModule
-   
-
-   
-   
-
-   
-
-    
+ 
   ],
   providers: [
     // ChecklistDatabase

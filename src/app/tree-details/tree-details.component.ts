@@ -42,20 +42,11 @@ const TREE_DATA = {
     'Almond Meal flour': null,
     'Organic eggs': null,
     'Protein Powder': null,
-    Fruits: {
-      Apple: null,
-      Berries: ['Blueberry', 'Raspberry'],
-      Orange: null,
-    },
+    
   },
-  Reminders: ['Cook dinner', 'Read the Material Design spec', 'Upgrade Application to Angular'],
 };
 
-/**
- * Checklist database, it can build a tree structured Json object.
- * Each node in Json object represents a to-do item or a category.
- * If a node is a category, it has children items and new items can be added under the category.
- */
+
 @Injectable()
 export class ChecklistDatabase {
   dataChange = new BehaviorSubject<TodoItemNode[]>([]);
@@ -77,10 +68,7 @@ export class ChecklistDatabase {
     this.dataChange.next(data);
   }
 
-  /**
-   * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
-   * The return value is the list of `TodoItemNode`.
-   */
+ 
   buildFileTree(obj: {[key: string]: any}, level: number): TodoItemNode[] {
     return Object.keys(obj).reduce<TodoItemNode[]>((accumulator, key) => {
       const value = obj[key];
@@ -139,13 +127,10 @@ export class TreeDetailsComponent {
   childs: TodoItemNode[] = []
   newChildNode: TodoItemNode | undefined;
   childsarray: string[] | undefined[] = [];
- /** Map from flat node to nested node. This helps us finding the nested node to be modified */
  flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
- /** Map from nested node to flattened node. This helps us to keep the same object for selection */
  nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
- /** A selected parent node to be inserted */
  selectedParent: TodoItemFlatNode | null = null;
 
  /** The new item's name */
@@ -288,20 +273,7 @@ export class TreeDetailsComponent {
    return null;
  }
 
- /** Select the category so we can insert the new item. */
-/** Select the category so we can insert the new item. */
-// addNewItem(node: TodoItemFlatNode) {
-//   const parentNode = this.flatNodeMap.get(node);
-//   const newItem = { item: 'New Item', children: [] } as TodoItemNode;
-//   if (parentNode) {
-//     if (!parentNode.children) {
-//       parentNode.children = [];
-//     }
-//     parentNode.children.push(newItem);
-//     this._database.dataChange.next(this._database.data); // Notify the change
-//     this.treeControl.expand(node);
-//   }
-// }
+ 
 
 addNewItem(node: TodoItemFlatNode) {
   const parentNode = this.flatNodeMap.get(node);
