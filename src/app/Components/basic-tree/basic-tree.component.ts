@@ -3,19 +3,11 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {Component, EventEmitter, Injectable, Output} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
-// import { MaterialModule } from '../../material/material.module';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-// import { UpdateTreeComponent } from '../update-tree/update-tree.component';
-// import { UpdatedialogComponent } from '../updatedialog/updatedialog.component';
-// import { AddDialogComponent } from '../add-dialog/add-dialog.component';
-import { CommonModule } from '@angular/common';
 import { UpdateDialougeComponent } from '../update-dialouge/update-dialouge.component';
 
 
-/**
- * Node for to-do item
- */
+
 export class TodoItemNode {
   children?: TodoItemNode[];
   item?: string;
@@ -29,9 +21,7 @@ export class TodoItemFlatNode {
   expandable?: boolean;
 }
 
-/**
- * The Json object for to-do list data.
- */
+
 const TREE_DATA = {
   Groceries: {
     'Almond Meal flour': null,
@@ -453,5 +443,9 @@ findParentNodeInTree(nodes: TodoItemNode[], childNode: TodoItemNode): TodoItemNo
     return undefined;
 }
 
+
+// editItem(node:any){
+
+// }
 
 }

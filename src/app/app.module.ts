@@ -5,7 +5,7 @@ import { CdkDropList} from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TreeDetailsComponent,ChecklistDatabase  } from './tree-details/tree-details.component';
+import { TreeDetailsComponent,  } from './tree-details/tree-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +20,7 @@ import { FormsModule} from '@angular/forms';
 import { AddItemComponent } from './add-item/add-item.component';
 import { DeletItemComponent } from './delet-item/delet-item.component';
 import { DropdownComponent, } from './dropdown/dropdown.component';
-import { BasicTreeComponent, } from './Components/basic-tree/basic-tree.component';
+import { BasicTreeComponent,ChecklistDatabase } from './Components/basic-tree/basic-tree.component';
 import { UpdateDialougeComponent } from './Components/update-dialouge/update-dialouge.component';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -58,7 +58,6 @@ import { MatSelectModule } from '@angular/material/select';
  
   ],
   providers: [
-    // ChecklistDatabase
     ChecklistDatabase
 
     ],

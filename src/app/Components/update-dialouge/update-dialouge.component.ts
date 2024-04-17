@@ -45,28 +45,23 @@ export class UpdateDialougeComponent {
   }
   filterParentNodes(selectedNode: TodoItemNode, allNodes: TodoItemNode[]): TodoItemNode[] {
     const parentNodes: TodoItemNode[] = [];
-    const updatedNodeAndDescendants: TodoItemNode[] = [];
-
-    const collectUpdatedNodeAndDescendants = (node: TodoItemFlatNode) => {
-      updatedNodeAndDescendants.push(node);
-    
-    };
-
-    collectUpdatedNodeAndDescendants(selectedNode);
-    
-
-    const filterOutDescendants = (node: TodoItemNode): boolean => {
-      for (const updatedNode of updatedNodeAndDescendants) {
-        if (updatedNode === node || updatedNodeAndDescendants.includes(node)) {
-          return false;
-        }
+  
+    const isDescendant = (node: TodoItemNode, potentialParent: TodoItemNode): boolean => {
+      if (node === potentialParent) {
+        return true;
       }
-      return true;
+      if (!node.children) {
+        return false;
+      }
+      return node.children.some(child => isDescendant(child, potentialParent));
     };
+  
     if (Array.isArray(allNodes)) {
-      parentNodes.push(...allNodes.filter(filterOutDescendants));
+      parentNodes.push(...allNodes.filter(node => !isDescendant(node, selectedNode) && node !== selectedNode));
     }
-
+  
     return parentNodes;
-}
+  }
+  
+  
 } 
