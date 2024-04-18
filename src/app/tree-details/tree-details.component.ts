@@ -452,7 +452,5 @@ hasChildren(node: TodoItemFlatNode): boolean {
   return !!nestedNode && !!nestedNode.children && nestedNode.children.length > 0;
 }
 
-
-
 }
 

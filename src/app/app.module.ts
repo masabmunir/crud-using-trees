@@ -5,7 +5,7 @@ import { CdkDropList} from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TreeDetailsComponent,  } from './tree-details/tree-details.component';
+import { TreeDetailsComponent } from './tree-details/tree-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
