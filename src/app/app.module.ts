@@ -23,8 +23,7 @@ import { DropdownComponent, } from './dropdown/dropdown.component';
 import { BasicTreeComponent,ChecklistDatabase } from './Components/basic-tree/basic-tree.component';
 import { UpdateDialougeComponent } from './Components/update-dialouge/update-dialouge.component';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { UserService } from 'src/service/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +34,6 @@ import { MatSelectModule } from '@angular/material/select';
     DropdownComponent,
     BasicTreeComponent,
     UpdateDialougeComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -54,12 +52,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatCheckboxModule ,
     CdkDropList,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
  
   ],
   providers: [
-    ChecklistDatabase
-
+    ChecklistDatabase,
+    UserService
     ],
   bootstrap: [AppComponent]
 })
