@@ -1,13 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, EventEmitter, Injectable, Output } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialougeComponent } from '../update-dialouge/update-dialouge.component';
 import { EditNodeDialogeComponent } from 'src/app/edit-node-dialoge/edit-node-dialoge.component';
-
-
 
 export class TodoItemNode {
   children?: TodoItemNode[];
@@ -22,7 +20,6 @@ export class TodoItemFlatNode {
   expandable?: boolean;
 }
 
-
 const TREE_DATA = {
   Groceries: {
     'Almond Meal flour': null,
@@ -32,7 +29,6 @@ const TREE_DATA = {
   },
 
 };
-
 
 @Injectable()
 export class ChecklistDatabase {
@@ -84,8 +80,6 @@ export class ChecklistDatabase {
   }
 }
 
-
-
 @Component({
   selector: 'app-basic-tree',
   templateUrl: './basic-tree.component.html',
@@ -101,8 +95,6 @@ export class BasicTreeComponent {
   childs: TodoItemNode[] = []
   newChildNode: TodoItemNode | undefined;
   childsarray: string[] | undefined[] = [];
-  // treeControl = new NestedTreeControl<any>(node => node.children);
-
 
   @Output() update = new EventEmitter<any>()
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();

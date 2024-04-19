@@ -49,12 +49,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatCheckboxModule,
     MatInputModule,MatButtonModule,
     MatSnackBarModule,
-   MatSnackBarModule ,
-   DragDropModule,
-   MatCheckboxModule ,
-   CdkDropList,
-   MatSelectModule,
-   MatMenuModule
+    MatSnackBarModule ,
+    DragDropModule,
+    MatCheckboxModule ,
+    CdkDropList,
+    MatSelectModule,
+    MatMenuModule
  
   ],
   providers: [
