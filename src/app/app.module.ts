@@ -24,6 +24,8 @@ import { BasicTreeComponent,ChecklistDatabase } from './Components/basic-tree/ba
 import { UpdateDialougeComponent } from './Components/update-dialouge/update-dialouge.component';
 import { MatSelectModule } from '@angular/material/select';
 import { UserService } from 'src/service/user.service';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +55,8 @@ import { UserService } from 'src/service/user.service';
     CdkDropList,
     MatSelectModule,
     MatMenuModule,
- 
+    HttpClientModule
+
   ],
   providers: [
     ChecklistDatabase,

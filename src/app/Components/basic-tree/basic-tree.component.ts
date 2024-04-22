@@ -6,11 +6,12 @@ import { BehaviorSubject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialougeComponent } from '../update-dialouge/update-dialouge.component';
 import { EditNodeDialogeComponent } from 'src/app/edit-node-dialoge/edit-node-dialoge.component';
+import { UserService } from 'src/service/user.service';
 
 export class TodoItemNode {
   children?: TodoItemNode[];
   item?: string;
-
+  id?: number
 }
 
 /** Flat to-do item node with expandable and level information */
@@ -29,6 +30,8 @@ const TREE_DATA = {
   },
 
 };
+
+
 
 @Injectable()
 export class ChecklistDatabase {
@@ -113,7 +116,7 @@ export class BasicTreeComponent {
 
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
-  constructor(private _database: ChecklistDatabase, private dialog: MatDialog) {
+  constructor(private _database: ChecklistDatabase, private dialog: MatDialog, private _user: UserService) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
@@ -121,6 +124,11 @@ export class BasicTreeComponent {
       this.getChildren,
 
     );
+
+    _user.getEmployees().subscribe((res: any) => {
+      console.log("res", res);
+    })
+
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -241,44 +249,54 @@ export class BasicTreeComponent {
     return null;
   }
 
-  /** Select the category so we can insert the new item. */
   addNewItem(node: TodoItemFlatNode) {
-   
+    debugger
     const parentNode = this.flatNodeMap.get(node);
     const newItemName = prompt("Enter the name of the new item");
     if (newItemName !== null && newItemName !== "") {
       if (!parentNode?.children) {
         parentNode!.children = [];
-        node.expandable = true
+        node.expandable = true;
         if (node.level) {
-          node.level += 1
+          node.level += 1;
         }
-        console.log(this._database.dataChange.next([...this._database.data]));
+        this._database.dataChange.next([...this._database.data]);
       }
       const newChildNode = { item: newItemName, children: [] } as TodoItemNode;
       parentNode?.children.push(newChildNode);
 
       this._database.dataChange.next([...this._database.data]);
       console.log("Expanding parent node:", parentNode);
-
+      let data = {
+        parent: parentNode?.item,
+        field: newItemName
+      };
+      this._user.addEmployee(data).subscribe(
+        (res: any) => {
+          console.log("Check Backend Response::: ", res);
+        },
+        (error: any) => {
+          console.error("Error adding employee:", error);
+        }
+      );
     }
   }
+
 
   /** Save the node to database */
   saveNode(node: TodoItemFlatNode, itemValue: string) {
     const nestedNode = this.flatNodeMap.get(node);
     this._database.updateItem(nestedNode!, itemValue);
   }
+
   deleteItem(node: TodoItemFlatNode): void {
     // Get the nested node corresponding to the flat node
     const nestedNode = this.flatNodeMap.get(node);
 
-    // Ensure the node exists
     if (!nestedNode) {
       return;
     }
 
-    // Delete the node from the data source
     const parentNode = this.getParentNode(node);
     if (parentNode) {
       const parentNestedNode = this.flatNodeMap.get(parentNode);
@@ -302,7 +320,6 @@ export class BasicTreeComponent {
   }
 
 
-
   getAllDescendants(node: TodoItemNode, excludedNode: TodoItemNode | null): (string | undefined)[] {
     if (!node.children) {
       return [];
@@ -314,15 +331,15 @@ export class BasicTreeComponent {
   openDialog(node: TodoItemFlatNode): void {
 
     const nestedNode = this.flatNodeMap.get(node);
- 
+
     console.log(nestedNode?.item)
     const nesteddescendent = nestedNode?.children?.flatMap(child => [
       child.item,
       ...(child?.children?.flatMap(node => [
         node.item,
         ...(node?.children?.map(nodes => nodes.item) || [])
-      ]) || [])  
-    ]) || [];  
+      ]) || [])
+    ]) || [];
 
 
     const parentNodesItemValues = this.parentNodes.map(node => {
@@ -438,22 +455,22 @@ export class BasicTreeComponent {
       console.error('Nested node is undefined');
       return;
     }
-  
+
     const dialogRef = this.dialog.open(EditNodeDialogeComponent, {
       width: '250px',
       data: { itemName: nestedNode.item } // Pass the current item name to the dialog
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result && result !== nestedNode.item) {
         this._database.updateItem(nestedNode!, result); // Update the item name in the database
       }
     });
   }
-  
+
   hasChildren(node: TodoItemFlatNode): boolean {
     const nestedNode = this.flatNodeMap.get(node);
     return !!nestedNode && !!nestedNode.children && nestedNode.children.length > 0;
   }
- 
+
 }
